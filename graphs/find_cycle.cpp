@@ -22,7 +22,7 @@ bool dfs(int v) {
 }
 
 int main() {
-	... чтение графа ...
+	...
 
 	p.assign(n, -1);
 	status.assign(n, 0);
