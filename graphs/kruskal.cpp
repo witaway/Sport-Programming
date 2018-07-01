@@ -42,8 +42,8 @@ int main() {
     ///If edge connects two verticles from different sets, then we connect them
     for(int cur = 0; cur < g.size(); cur++) {
         auto k = g[cur];
-        if(s.get(k.xx) != s.get(k.yy)) {
-            s.unite(k.xx, k.yy);
+        if(s.get(k.second.first) != s.get(k.second.second)) {
+            s.unite(k.second.first, k.second.second);
         }
     }
 
