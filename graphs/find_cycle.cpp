@@ -7,7 +7,7 @@ vector<int> p;
 bool dfs(int v) {
 	status[v] = in;
 	for(auto to : g[v]) {
-        if(status[to] == still_out) {
+	        if(status[to] == still_out) {
 			p[to] = v;
 			if(dfs(to)) return true;
 		}
@@ -22,6 +22,7 @@ bool dfs(int v) {
 }
 
 int main() {
+	
 	...
 
 	p.assign(n, -1);
@@ -36,7 +37,7 @@ int main() {
     }
 	else {
 		cout << "Cyclic" << endl;
-
+		
 		vector<int> cycle;
 		cycle.push_back(cycle_start);
 		for (int v = cycle_end; v != cycle_start; v = p[v]) {
@@ -45,8 +46,8 @@ int main() {
 		cycle.push_back(cycle_start);
 		reverse (cycle.begin(), cycle.end());
 
-        for(auto &x : cycle) {
-            cout << x + 1 << " ";
-        }
+        	for(auto &x : cycle) {
+            		cout << x + 1 << " ";
+        	}
 	}
 }
