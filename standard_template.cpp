@@ -9,19 +9,16 @@
 using namespace std;
 
 #define endl "\n"
-#define pb push_back
-#define ppb pop_back
 #define ff first
 #define ss second
 #define writeln(that_arr,that_method) for(auto &that_iterator : that_arr) that_method << that_iterator << " "; that_method << endl;
 #define matrix_writeln(that_matrix,that_method) for(auto &that_iterator1 : that_matrix) {for(auto &that_iterator2 : that_iterator1) that_method << that_iterator2 << " "; that_method << endl;}
 #define map_writeln(that_map,that_method) for(auto &that_iterator : that_map) that_method << that_iterator.ff << " : " << that_iterator.ss << endl;
-#define halt() exit(EXIT_SUCCESS)
 
-typedef long long ll;
-typedef long double ld;
-typedef unsigned long long ull;
-typedef unsigned int ui;
+using ll  = long long;
+using ld  = long double;
+using ull = unsigned long long;
+using ui  = unsigned int;
 
 const double pi = 3.14159265358979323;
 const double eps = 0.0000001;
@@ -36,9 +33,10 @@ int main(int argc, char **argv) {
 #else
     freopen("file.in", "r", stdin);
     freopen("file.out", "w", stdout);
+#define cerr if(0) cerr
 #endif
 
 
 
-    return 0;
+    return EXIT_SUCCESS;
 }
