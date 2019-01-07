@@ -16,7 +16,7 @@ struct edge {
 
 int n, s; //Quantity of vertexes and number of start vertex
 vector<edge> g; //List of edges
-vector<int> d(n, inf); //Shortest way between
+vector<int> d(n, inf); //Shortest way between s and others
 
 d[s] = 0; //We always can reach vertex s from vertex s.
 
