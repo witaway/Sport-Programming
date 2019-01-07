@@ -1,29 +1,31 @@
-class Set {
-public:
+struct Set {
+    vector<int> p
+    vector<int> r;
+
     Set(int n) {
         p.resize(n);
         r.resize(n);
         reset();
     }
+
     void reset() {
-        iota(p.begin(), p.end(), 0);
         fill(r.begin(), r.end(), 1);
+        iota(p.begin(), p.end(), 0);
     }
-    int get(int v) {
-        if(p[v] == v) return v;
-        return p[v] = get(p[v]);
+
+    ///I don't know how this magic works.
+    int get(int x) {
+        if(p[x] == x) return x;
+        ///BE ATTENTIVE! get(p[x]) - NOT get(x) !!!
+        return p[x] = get(p[x]);
     }
-    void unite(int x, int y) {
-        x = get(x);
-        y = get(y);
-        if(x != y) {
-            if(r[y] > r[x]) swap(x, y);
-            p[y] = p[x];
-            r[x] += r[y];
+
+    void unite(int a, int b) {
+        a = get(a), b = get(b);
+        if(a != b) {
+            if(r[b] > r[a]) swap(a, b);
+            r[a] += r[b];
+            p[b] = p[a];
         }
     }
-private:
-    vector<int> p;
-    vector<int> r;
 };
-
