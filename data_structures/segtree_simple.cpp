@@ -8,7 +8,7 @@ struct segtree {
         
         st = 1;
         while(st < a.size()) st *= 2;
-        t.assign(st * 2 + 100, 0);
+        t.assign(st * 2, 0);
         
         ///Filling bottom row with elements of array a
         for(int i = 0; i < a.size(); i++) {
