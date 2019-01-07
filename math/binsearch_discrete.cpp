@@ -12,10 +12,9 @@ long double need;
 //YOUR CHOICE:
 //while(r - l > eps) {
 //for(int i = 0; i < 400; i++) {
-    long double mid = (l + r) / 2;
-    long double cur = f(mid);
-    if(cur < need) l = mid;
-    else if(cur > need) r = mid;
+    long double m = (l + r) / 2;
+    if(f(m) < need) l = mid;
+    else r = mid;
 }
 
 //Now answer is l. Check it!
