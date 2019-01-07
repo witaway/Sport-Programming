@@ -1,51 +1,30 @@
-///Is DSU realization
-class Set {
-public:
-    Set(int n) {
-        p.resize(n);
-        r.resize(n);
-        reset();
+///Simple data structure that describes the edge of the graph
+struct edge {
+    edge(int from, int to, int cost) {
+        this->from = from;
+        this->to = to;
+        this->cost = cost;
     }
-    void reset() {
-        iota(p.begin(), p.end(), 0);
-        fill(r.begin(), r.end(), 1);
-    }
-    int get(int v) {
-        if(p[v] == v) return v;
-        return p[v] = get(p[v]);
-    }
-    void unite(int x, int y) {
-        x = get(x);
-        y = get(y);
-        if(x != y) {
-            if(r[y] > r[x]) swap(x, y);
-            p[y] = p[x];
-            r[x] += r[y];
-        }
-    }
-private:
-    vector<int> p;
-    vector<int> r;
+    int from, to;
+    int cost;
 };
 
-int main() {
+///Just comparator
+bool comp(edge a, edge b) {
+    return a.cost < b.cost;
+}
 
-    ///.first - distance, .second.first - first vertex, .second.second - second vertex
-    vector<pair<int, pair<int, int>>> g;
-    int n;
+...
 
-    ...
+int n; ///Quantity of vertexes
+vector<edge> g; ///List of edges of graph
 
-    sort(g.begin(), g.end());
-    Set s(5005);
+Set s(n); ///DSU data structure. Read about it. (data_structures/dsu.cpp)
+sort(g.begin(), g.end(), comp);
 
+for(auto &edge : g) {
     ///If edge connects two verticles from different sets, then we connect them
-    for(int cur = 0; cur < g.size(); cur++) {
-        auto k = g[cur];
-        if(s.get(k.second.first) != s.get(k.second.second)) {
-            s.unite(k.second.first, k.second.second);
-        }
+    if(s.get(edge.from) != s.get(edge.to)) {
+        s.unite(edge.from, edge.to);
     }
-
-    return 0;
 }
