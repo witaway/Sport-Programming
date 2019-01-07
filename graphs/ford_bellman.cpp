@@ -22,6 +22,9 @@ d[s] = 0; //We always can reach vertex s from vertex s.
 
 //We continue only if we relax at least one edge.
 //And we always do at least one iteration.
+
+//AND FORD-BELLMAN algorithm needs maximum only N iterations for find answer! 
+//If it is not, it mean that graph have cycle with negative weigth! BE ATTENTIVE! 
 bool any;
 do {
     any = false;
