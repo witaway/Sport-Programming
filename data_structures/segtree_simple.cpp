@@ -1,43 +1,64 @@
-template<typename T>
+///[l, r]
 struct segtree {
-    int n;
-    vector<T> t;
 
-    segtree(int sz) {
-        this->n = 1;
-        while(this->n < sz) this->n <<= 1;
-        t.assign(this->n + this->n, {INT_MIN, -1});
+    vector<long long> t;
+    long long st; //Number of first element in bottom row. 
+
+    segtree(vector<long long> &a) {
+        
+        st = 1;
+        while(st < a.size()) st *= 2;
+        t.assign(st * 2 + 100, 0);
+        
+        ///Filling bottom row with elements of array a
+        for(int i = 0; i < a.size(); i++) {
+            t[st + i] = a[i];
+        }
+        
+        init();
     }
 
-    T combine(T a, T b) {
-        return max(a, b);
+    ///Init tree.
+    void init() {
+        for(int i = st - 1; i >= 1; i--) {
+            t[i] = t[i * 2] + t[i * 2 + 1];
+        }
     }
 
-    void modify(int p, T val, int root, int l, int r) {
-        if(r - l < 2) {
-            t[root] = val;
+    void modify(int cl, int cr, int v, int p, int x) {
+        ///Do not forget about it.
+        if(cl == cr) {
+            t[v] = x;
             return;
         }
 
-        int mid = (l + r) >> 1;
-        if(p < mid) modify(p, val, root<<1, l, mid);
-        else modify(p, val, root<<1|1, mid, r);
+        int mid = (cl + cr) / 2;
+        if(p <= mid) modify(cl, mid, v * 2, p, x);
+        else         modify(mid + 1, cr, v * 2 + 1, p, x);
 
-        t[root] = combine(t[root<<1], t[root<<1|1]);
+        ///And about it.
+        t[v] = t[v * 2] + t[v * 2 + 1];
     }
 
-    void modify(int p, T val) {
-        modify(p, val, 1, 0, n);
+    void modify(int p, int x) {
+        ///Be attentive with it!
+        ///[0, a.size() - 1] IS INCORRECT!
+        ///[0, st - 1] IS NEEDED!
+        modify(0, st - 1, 1, p, x);
     }
 
-    T query(int x, int y, int root, int l, int r) {
-        if(l >= y || r <= x) return {INT_MIN, -1};
-        if(l >= x && r <= y) return t[root];
-        int mid = (l + r) >> 1;
-        return combine(query(x, y, root<<1, l, mid), query(x, y, root<<1|1, mid, r));
+    long long query(int cl, int cr, int v, int l, int r) {
+        if(cl > r || cr < l) return 0;
+        if(cl >= l && cr <= r) return t[v];
+        int mid = (cl + cr) / 2;
+        return query(cl, mid, v * 2, l, r) +
+               query(mid + 1, cr, v * 2 + 1, l, r);
     }
 
-    T query(int x, int y) {
-        return query(x, y, 1, 0, n);
+    long long query(int l, int r) {
+        ///Be attentive with it!
+        ///[0, a.size() - 1] IS INCORRECT!
+        ///[0, st - 1] IS NEEDED!
+        return query(0, st - 1, 1, l, r);
     }
 };
