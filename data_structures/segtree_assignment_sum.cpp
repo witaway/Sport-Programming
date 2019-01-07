@@ -76,7 +76,9 @@ struct segtree {
         if(cl >= l && cr <= r) return t[v];
 
         ///You should to push in every recursive operation before recursive descent to children.
-        ///Idk why there is this condition, it is magic.
+        ///Protection against outing of array bounds. If cl == cr than we are in leaf.
+        ///And we can't push from leaf because leaf have not ancestors to push.
+        ///And v * 2 will be higher that t.size() ---> Runtime error.
         if(cl != cr) push(v, cl, cr);
 
         int mid = (cl + cr) / 2;
