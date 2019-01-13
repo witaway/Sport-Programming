@@ -1,8 +1,6 @@
-#pragma comment(linker, "/stack:200000000")
-#pragma GCC optimize("Ofast")
 #pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")
+#pragma GCC optimize("Ofast")
 #pragma GCC optimize("unroll-loops")
-#define _CRT_SECURE_NO_WARNINGS
 
 #include <bits/stdc++.h>
 
@@ -31,8 +29,8 @@ int main(int argc, char **argv) {
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #else
-    freopen("file.in", "r", stdin);
-    freopen("file.out", "w", stdout);
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
 #define cerr if(0) cerr
 #endif
 
