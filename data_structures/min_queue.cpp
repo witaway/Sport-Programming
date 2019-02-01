@@ -22,7 +22,7 @@ struct min_queue {
     }
     bool empty() { return toPush.empty() && toPop.empty(); }
     void push(int x) { toPush.push(x); }
-    void pop(int x) { fix(); toPop.pop(); }
+    void pop() { fix(); toPop.pop(); }
     int top() { fix(); toPop.top(); }
     int mn() {
         if(toPush.empty()) return toPop.mn();
