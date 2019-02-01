@@ -4,7 +4,7 @@ struct min_stack {
         st.push(x);
         pr.push(min(x, pr.top()));
     }
-    void pop { st.pop(); pr.pop(); }
+    void pop() { st.pop(); pr.pop(); }
     int top() { return st.top(); }
     int mn() { return pr.top(); }
     bool empty() { return st.empty(); }
