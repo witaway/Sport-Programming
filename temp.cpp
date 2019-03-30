@@ -1,66 +1,65 @@
-vector<vector<int>> nxt;
-vector<int> k;
-int sz = 1;
+const ll inf = 1e17;
+const int N = 1e3 + 7;
 
-void add(int x) {
-    int v = 0;
-    for(int i = 30; i >= 0; i--) {
-        int to = (((1 << i) & x) > 0 ? 1 : 0);
-        if(nxt[v][to] == 0) {
-            sz++;
-            nxt[v][to] = sz;
-        }
-        v = nxt[v][to];
-        k[v]++;
-    }
-}
+int n, m, x, y, w;
+ll f[N][N], c[N][N];
+vector<int> g[N];
+vector<ll> d;
 
-void del(int x) {
-    int v = 0;
-    for(int i = 30; i >= 0; i--) {
-        int to = (((1 << i) & x) > 0 ? 1 : 0);
-        v = nxt[v][to];
-        k[v]--;
-    }
-}
-
-int mx_xor(int x) {
-    int v = 0, ans = 0;
-    for(int i = 30; i >= 0; i--) {
-        int to = (((1 << i) & x) > 0 ? 0 : 1);
-        if(nxt[v][to] == 0 || k[nxt[v][to]] == 0) to = !to;
-        if(to) ans += (1 << i);
-        v = nxt[v][to];
-    }
-    return ans;
-}
-
-...
-
-int main() {
-	
-    nxt.assign(5e6, vector<int>(2, 0));
-    k.assign(5e6, 0);
-
-    int q;
-    cin >> q;
-
-    add(0);
-
-    for(int it = 0; it < q; it++) {
-        char type;
-        int val;
-
-        cin >> type >> val;
-        if(type == '+') {
-            add(val);
-        } else
-        if(type == '-') {
-            del(val);
-        } else {
-            cout << (val ^ mx_xor(val)) << endl;
+bool bfs() {
+    d.assign(n, -1);
+    d[0] = 0;
+    queue<int> q;
+    q.push(0);
+    while(!q.empty()) {
+        int v = q.front();
+        q.pop();
+        for(auto to : g[v]) {
+            if(d[to] == -1 && f[v][to] < c[v][to]) {
+                q.push(to);
+                d[to] = d[v] + 1;
+            }
         }
     }
+    return d[n - 1] != -1;
+}
 
+ll dfs(int v, ll k) {
+    if(!k) return 0;
+    if(v == n - 1) return k;
+    for(auto to : g[v]) {
+        if(d[to] != d[v] + 1) continue;
+        ll add = dfs(to, min(k, c[v][to] - f[v][to]));
+        if(add != 0) {
+            f[v][to] += add;
+            f[to][v] -= add;
+            return add;
+        }
+    }
     return 0;
 }
+
+///Hi There!
+int main(int argc, char **argv) {
+	
+    cin >> n >> m;
+
+    for(int i = 0; i < m; i++){
+        cin >> x >> y >> w;
+        x--, y--;
+        g[x].push_back(y);
+        c[x][y] = w;
+    }
+
+    ll ans = 0;
+    while(bfs()) {
+        while(ll add = dfs(0, inf)) {
+            ans += add;
+        }
+    }
+
+    cout << ans;
+
+    return EXIT_SUCCESS;
+}
+
