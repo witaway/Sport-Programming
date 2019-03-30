@@ -1,40 +1,66 @@
-int n, k;
-vector < vector<int> > g;
-vector<int> mt;
-vector<char> used;
- 
-bool try_kuhn (int v) {
-	if (used[v])  return false;
-	used[v] = true;
-	for (size_t i=0; i<g[v].size(); ++i) {
-		int to = g[v][i];
-		if (mt[to] == -1 || try_kuhn (mt[to])) {
-			mt[to] = v;
-			return true;
-		}
-	}
-	return false;
+vector<vector<int>> nxt;
+vector<int> k;
+int sz = 1;
+
+void add(int x) {
+    int v = 0;
+    for(int i = 30; i >= 0; i--) {
+        int to = (((1 << i) & x) > 0 ? 1 : 0);
+        if(nxt[v][to] == 0) {
+            sz++;
+            nxt[v][to] = sz;
+        }
+        v = nxt[v][to];
+        k[v]++;
+    }
 }
 
+void del(int x) {
+    int v = 0;
+    for(int i = 30; i >= 0; i--) {
+        int to = (((1 << i) & x) > 0 ? 1 : 0);
+        v = nxt[v][to];
+        k[v]--;
+    }
+}
+
+int mx_xor(int x) {
+    int v = 0, ans = 0;
+    for(int i = 30; i >= 0; i--) {
+        int to = (((1 << i) & x) > 0 ? 0 : 1);
+        if(nxt[v][to] == 0 || k[nxt[v][to]] == 0) to = !to;
+        if(to) ans += (1 << i);
+        v = nxt[v][to];
+    }
+    return ans;
+}
+
+...
+
 int main() {
-	... чтение графа ...
- 
-	mt.assign (k, -1);
-	vector<char> used1 (n);
-	for (int i=0; i<n; ++i)
-		for (size_t j=0; j<g[i].size(); ++j)
-			if (mt[g[i][j]] == -1) {
-				mt[g[i][j]] = i;
-				used1[i] = true;
-				break;
-			}
-	for (int i=0; i<n; ++i) {
-		if (used1[i])  continue;
-		used.assign (n, false);
-		try_kuhn (i);
-	}
- 
-	for (int i=0; i<k; ++i)
-		if (mt[i] != -1)
-			printf ("%d %d\n", mt[i]+1, i+1);
+	
+    nxt.assign(5e6, vector<int>(2, 0));
+    k.assign(5e6, 0);
+
+    int q;
+    cin >> q;
+
+    add(0);
+
+    for(int it = 0; it < q; it++) {
+        char type;
+        int val;
+
+        cin >> type >> val;
+        if(type == '+') {
+            add(val);
+        } else
+        if(type == '-') {
+            del(val);
+        } else {
+            cout << (val ^ mx_xor(val)) << endl;
+        }
+    }
+
+    return 0;
 }
