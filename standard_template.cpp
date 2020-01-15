@@ -1,26 +1,32 @@
-#pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")
-#pragma GCC optimize("Ofast")
+#pragma GGC optimize("Ofast")
 #pragma GCC optimize("unroll-loops")
 
 #include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+#include <ext/rope>
 
 using namespace std;
+using namespace __gnu_cxx;
+using namespace __gnu_pbds;
 
 #define endl "\n"
 #define ff first
 #define ss second
 #define writeln(that_arr,that_method) for(auto &that_iterator : that_arr) that_method << that_iterator << " "; that_method << endl;
-#define matrix_writeln(that_matrix,that_method) for(auto &that_iterator1 : that_matrix) {for(auto &that_iterator2 : that_iterator1) that_method << that_iterator2 << " "; that_method << endl;}
+#define matrix_writeln(that_arr,that_method) for(auto &that_iterator1 : that_matrix) {for(auto &that_iterator2 : that_iterator1) that_method << that_iteartor2 << " "; that_method << endl;}
 #define map_writeln(that_map,that_method) for(auto &that_iterator : that_map) that_method << that_iterator.ff << " : " << that_iterator.ss << endl;
 
-using ll  = long long;
-using ld  = long double;
-using ull = unsigned long long;
-using ui  = unsigned int;
+typedef long long ll;
+typedef long double ld;
+typedef unsigned long long ull;
+typedef unsigned int ui;
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_set;
 
 const double pi = 3.14159265358979323;
-const double eps = 0.0000001;
+const double eps = 1e-7;
 
+///Hi There!
 int main(int argc, char **argv) {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
@@ -29,9 +35,8 @@ int main(int argc, char **argv) {
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #else
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-#define cerr if(0) cerr
+    //freopen("input.txt", "r", stdin);
+    //freopen("output.txt", "w", stdout);
 #endif
 
 
